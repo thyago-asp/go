@@ -1,21 +1,75 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { createContext, useState } from 'react';
+import { StyleSheet, Image, View, Text, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import Home from './src/Screens/Home'
+import Main from './src/Screens/Main'
+import Login from './src/Screens/Login'
+import SideMenu from './src/Components/SideMenu'
+import AuthProvider from './src/Context/AuthProvider'
+import useAuth from './src/Context/useAuth';
+
+
+const Drawer = createDrawerNavigator();
+
+
 
 export default function App() {
+ 
+  const {
+    authenticated, handleLogin, handleLogout,
+  } = useAuth();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthProvider.Provider value={{ authenticated, handleLogin, handleLogout }}>
+      <NavigationContainer>
+        <Drawer.Navigator initialRouteName="Home" drawerContent={props => SideMenu(props)}>
+          <Drawer.Screen name="Home" component={Home} />
+          <Drawer.Screen name="Main" component={Main} />
+          <Drawer.Screen name="Login" component={Login} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </AuthProvider.Provider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    width: '100%',
+    // eixo linha / cruzado
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#000',
+    //eixo coluna / principal
+    justifyContent: "flex-start"
+
   },
+  logo: {
+    width: '100%',
+    height: '40%',
+  },
+  fixToText: {
+    width: '90%',
+    justifyContent: 'space-between',
+    paddingTop: 250,
+
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#F4BC33",
+    padding: 20,
+    width: '100%',
+    borderRadius: 9
+
+  },
+  fontButton: {
+    fontSize: 18,
+    color: '#fff'
+  },
+  menu: {
+    width: 20,
+    height: 20
+  }
 });
