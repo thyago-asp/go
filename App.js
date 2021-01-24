@@ -12,25 +12,28 @@ import AuthProvider from './src/Context/AuthProvider'
 import useAuth from './src/Context/useAuth';
 
 
-const Drawer = createDrawerNavigator();
 
 
+const navegacao = NavigationContainer
 
 export default function App() {
- 
+  
+
   const {
-    authenticated, handleLogin, handleLogout,
+    authenticated, handleLogin, handleLogout, user
   } = useAuth();
 
+  const Drawer = createDrawerNavigator()
+  
   return (
-    <AuthProvider.Provider value={{ authenticated, handleLogin, handleLogout }}>
+    <AuthProvider.Provider value={{ singned: authenticated, handleLogin, handleLogout, usuario: user}} >
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Home" drawerContent={props => SideMenu(props)}>
+        <Drawer.Navigator initialRouteName="Home" drawerContent={(props) => SideMenu(props.navigation)} >
           <Drawer.Screen name="Home" component={Home} />
           <Drawer.Screen name="Main" component={Main} />
           <Drawer.Screen name="Login" component={Login} />
         </Drawer.Navigator>
-      </NavigationContainer>
+      </NavigationContainer>     
     </AuthProvider.Provider>
   );
 }

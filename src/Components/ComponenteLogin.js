@@ -7,10 +7,12 @@ import Context from '../Context/AuthProvider'
 
 
 export default ComponenteLogin = (props) => {
-    const [user, setUser] = useState(null);
-    const { authenticated, handleLogin } = useContext(Context);
-     const habilitadoEdicao = false;
     
+    const { authenticated, handleLogin } = useContext(Context);
+
+     const habilitadoEdicao = false;
+
+   
     return (
         <View style={styles.container}>
             
@@ -36,7 +38,7 @@ export default ComponenteLogin = (props) => {
 
             <TouchableOpacity
                 style={styles.buttonFacebook}
-                onPress={() => handleLogin()}
+                onPress={() => handleLogin(props.navigation)}
                 disabled={habilitadoEdicao ? true : false }
             >
                 <Text style={styles.fontButton}>Facebook</Text>

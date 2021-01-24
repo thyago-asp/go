@@ -1,36 +1,25 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Text, View, StyleSheet, SafeAreaView, Image, ScrollView } from 'react-native'
-import { List, ListItem } from 'native-base' 
+import { List, ListItem } from 'native-base'
+import Context from '../Context/AuthProvider'
+import Cabecalho from '../Components/Menu/CabecalhoMenu'
+import Conteudo from "./Menu/ConteudoMenu"
+import ConteudoMenu from './Menu/ConteudoMenu'
+import { Drawer } from 'react-native-paper';
 
-export default SideMenu = props => {
 
-  let { container, imageUser } = styles;
+export default SideMenu = (props) => {
+  
+  
   return (
-    <SafeAreaView style={container}>
-      <View style={imageUser}>
-        <Image
-          source={require('../../assets/logo.png')}
-          style={{ height: 120, width: 120, borderRadius: 60 }} />
+    
+    <SafeAreaView style={styles.container}>
+      <View style={styles.imageUser}>
+        <Cabecalho />
       </View>
-      <ScrollView> 
-        <List>
-          <ListItem onPress={() => props.navigation.navigate('Home')}>
-            <Text style={{color: "#F4BC33"}}>Inicio</Text>
-          </ListItem>
-          <ListItem onPress={() => props.navigation.navigate('Login')}>
-            <Text style={{color: "#F4BC33"}}>Login</Text>
-          </ListItem>
       
-        </List>
-
-      </ScrollView>
- 
-      <List>
-        <ListItem noBorder onPress={() => props.navigation.navigate('Home')}>
-          <Text>Sair</Text>
-        </ListItem>
-      </List>
-
+      <ConteudoMenu navigation={props}/>
+         
     </SafeAreaView>
   );
 
@@ -40,7 +29,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
-  
+    alignItems: 'center',
   },
   imageUser: {
     height: 150,

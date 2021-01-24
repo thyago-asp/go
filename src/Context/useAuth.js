@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+
+import Context from '../Context/AuthProvider'
 import * as Facebook from "expo-facebook";
 
 export default function useAuth() {
     const [authenticated, setAuthenticated] = useState(false);
+    const [user, setUser] = useState(null)
 
-    async function handleLogin() {
+    async function handleLogin(props) {
 
         try {
             await Facebook.initializeAsync({
@@ -20,26 +23,39 @@ export default function useAuth() {
                 const response = await fetch(
                     `https://graph.facebook.com/me?fields=id,name,picture.type(large),email&access_token=${token}`
                 );
-                props.navigate('Main')
-                console.log((await response.json()));
+
+                // console.log((await response.json()));
                 const data = await response.json();
                 setUser(data);
                 setAuthenticated(true);
+                props.navigate('Main')
             } else {
                 // type === 'cancel'
             }
         } catch ({ message }) {
-            // props.navigate('Main')
+            setAuthenticated(true);
+            const response = await fetch(
+                `https://graph.facebook.com/me?fields=id,name,picture.type(large),email&access_token=${token}`
+            );
+
+            console.log((await response.json()));
+            const data = await response.json();
+            setUser(data);
+            props.navigate('Main')
         }
 
-        
+
 
     }
 
     function handleLogout() {
+        // Facebook.logOutAsync();
+        // setUser(data);
+        // props.navigate('Main')
+        console.log("Clicou em sair")
         setAuthenticated(false);
 
     }
 
-    return { authenticated, handleLogin, handleLogout };
+    return { authenticated, handleLogin, handleLogout, user };
 }

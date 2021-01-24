@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Context from '../Context/AuthProvider'
 
 export default Detalhes = (props) => {
 
-    const { authenticated, handleLogin } = useContext(Context);
+    const { singned } = useContext(Context);
     return (
         <View style={styles.container}>
 
@@ -13,7 +13,7 @@ export default Detalhes = (props) => {
             <Text style={styles.conteudo}>R$130,00</Text>
             <Text style={styles.conteudo}>{props.distancia} Km</Text>
             {
-                authenticated ?
+                singned ?
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => props.navigation.navigate('Login')}

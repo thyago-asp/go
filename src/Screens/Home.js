@@ -1,14 +1,14 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { TouchableOpacity, Image, SafeAreaView, View, StyleSheet, Text } from 'react-native'
 import Context from '../Context/AuthProvider'
 
 export default home = ({ navigation }) => {
-    const { authenticated, handleLogin } = useContext(Context);
-    console.log(authenticated)
-    // handleLogin
-    console.log("----------------")
+    const { singned , navegacao } = useContext(Context);
 
-    // console.log(handleLogin)
+    //console.log(Context)
+    useEffect(() => {
+       // console.log(singned)
+      }, []);
     return (
 
         <SafeAreaView style={styles.container}>
@@ -18,22 +18,35 @@ export default home = ({ navigation }) => {
             />
 
             <View style={styles.fixToText}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => navigation.navigate('Main')}
-                >
-                    <Text style={styles.fontButton}>Pedir frete</Text>
-                </TouchableOpacity>
+
                 {
-                    !authenticated ?
-                <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => navigation.navigate('Login')}
-                >
-                    <Text style={styles.fontButton}>Login</Text>
-                </TouchableOpacity>
-                :
-                <Text style={styles.fontButton}>Seja bem vindo</Text>
+                    singned ?
+                        <>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => navigation.navigate('Main')}
+                            >
+                                <Text style={styles.fontButton}>Pedir frete</Text>
+                            </TouchableOpacity>
+
+                            
+                        </>
+                        :
+                        <>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => navigation.navigate('Main')}
+                            >
+                                <Text style={styles.fontButton}>Simular frete</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={styles.button2}
+                                onPress={() => navigation.navigate('Login')}
+                            >
+                                <Text style={styles.fontButton}>Login</Text>
+                            </TouchableOpacity>
+                        </>
                 }
             </View>
         </SafeAreaView>
